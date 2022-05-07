@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/EpitechPromo2026/B-WEB-200-MPL-2-1-epytodo-maxim.costa/issues"
   },
-  "homepage": "https://github.com/EpitechPromo2026/B-WEB-200-MPL-2-1-epytodo-maxim.costa#readme"
+  "homepage": "https://github.com/EpitechPromo2026/B-WEB-200-MPL-2-1-epytodo-maxim.costa#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3"
+  }
 }
