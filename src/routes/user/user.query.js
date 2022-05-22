@@ -14,7 +14,7 @@ const queries = {
 };
 
 const getUser = (req, callback, callErr) => {
-    req.db.execute(queries.get_id, [req.email], (err, rows, fields) => {
+    req.db.execute(queries.get_user, [req.email], (err, rows, fields) => {
         if (err) return callErr(500, { msg: "Internal server error" });
         if (rows.length == 0) return callErr(404, { msg: "Not found" });
         req.user = rows[0];
@@ -44,7 +44,6 @@ const loginUser = (req, params, callback, callErr) => {
 const getUserTodo = (req, callback, callErr) => {
     req.db.execute(queries.view_todo, [req.user.id], (err, rows, fields) => {
         if (err) return callErr(500, { msg: "Internal server error" });
-        if (rows.length == 0) return callErr(404, { msg: "Not found" });
         callback(rows);
     });
 };

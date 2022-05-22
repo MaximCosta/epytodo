@@ -2,20 +2,17 @@ const express = require("express");
 const { authenticateToken } = require("../../middleware/auth");
 const { notFoundUser } = require("../../middleware/notFoundUser");
 const { isEmail, isId, checkParams } = require("../../utils/validator");
-const { getUserTodo, getUserByIdOrEmail, updateUser, deleteUser } = require("./user.query");
+const { getUser, getUserTodo, getUserByIdOrEmail, updateUser, deleteUser } = require("./user.query");
 
 const initRoute = (app) => {
     var user = express.Router();
 
     user.get("", [authenticateToken, notFoundUser], (req, res) => {
-        res.status(200).json({
-            id: req.user.id,
-            email: req.user.email,
-            password: req.user.password,
-            created_at: req.user.created_at,
-            first_name: req.user.first_name,
-            name: req.user.name,
-        });
+        getUser(
+            req,
+            () => res.status(200).json(req.user),
+            (status, error) => res.status(status).json(error)
+        );
     });
 
     user.get("/todos", [authenticateToken, notFoundUser], (req, res) => {

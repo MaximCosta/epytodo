@@ -2,6 +2,7 @@ const express = require("express");
 const { authenticateToken } = require("../../middleware/auth");
 const { notFoundUser } = require("../../middleware/notFoundUser");
 const { getAllTodos, getOneTodo, createTodo, updateTodo, deleteTodo } = require("./todos.query");
+const { isId, checkParams } = require("../../utils/validator");
 
 const initRoute = (app) => {
     var todos = express.Router();

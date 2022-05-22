@@ -1,7 +1,7 @@
 const queries = {
     view_all: "SELECT * FROM todo WHERE user_id = ?",
     view_one: "SELECT * FROM todo WHERE id = ? AND user_id = ?",
-    create_one: "INSERT INTO todo SET (title, description, due_time, user_id, status) = (?, ?, ?, ?, ?)",
+    create_one: "INSERT INTO todo (title, description, due_time, user_id, status) VALUES (?, ?, ?, ?, ?)",
     update_one: "UPDATE todo SET title = ?, description = ?, due_time = ?, user_id = ?, status = ? WHERE id = ?",
     delete_one: "DELETE FROM todo WHERE id = ?",
 };
@@ -9,7 +9,6 @@ const queries = {
 const getAllTodos = (req, callback, callErr) => {
     req.db.execute(queries.view_all, [req.user.id], (err, rows, fields) => {
         if (err) return callErr(500, { msg: "Internal server error" });
-        if (rows.length == 0) return callErr(404, { msg: "Not found" });
         callback(rows);
     });
 };
@@ -24,7 +23,7 @@ const getOneTodo = (req, callback, callErr) => {
 
 const createTodo = (req, params, callback, callErr) => {
     req.db.execute(queries.create_one, params, (err, rows, fields) => {
-        if (err) return callErr(500, { msg: "Internal server error" });
+        if (err) return callErr(500, { msg: "Internal server error", err });
         req.params.id = rows.insertId;
         getOneTodo(req, callback, callErr);
     });

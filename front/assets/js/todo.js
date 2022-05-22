@@ -54,11 +54,7 @@ var todolist = new Vue({
     data: {
         newitem: "",
         sortByStatus: false,
-        todo: [
-            { id: 1, label: "Learn VueJs", done: true, status: "done" },
-            { id: 2, label: "Code a todo list", done: false, status: "todo" },
-            { id: 3, label: "Learn something else", done: false, status: "todo" },
-        ],
+        todo: [],
     },
     methods: {
         addItem: function () {
@@ -94,4 +90,7 @@ var todolist = new Vue({
             return sortedArray;
         },
     },
+    mounted() {
+        axios
+    }
 });
