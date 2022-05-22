@@ -3,10 +3,18 @@ var express = require("express");
 const app = express();
 dotenv.config();
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use((req, res, next) => {
+    req.db = pool;
+    next();
+})
+
 let pool = require("./config/db").pool();
-let auth = require("./routes/auth").init(app, pool);
-let user = require("./routes/user").init(app, pool);
-let todos = require("./routes/todos").init(app, pool);
+let auth = require("./routes/auth").init(app);
+let user = require("./routes/user").init(app);
+let todos = require("./routes/todos").init(app);
+
 
 app.use(function (req, res) {
     res.status(404).json({ msg: "Not found" });

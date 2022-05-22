@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/EpitechPromo2026/B-WEB-200-MPL-2-1-epytodo-maxim.costa#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cli-table": "^0.3.11",

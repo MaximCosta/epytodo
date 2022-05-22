@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/todo.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
+</head>
+
+<body>
+    <div id="modal">
+        <modal name="Status">
+            <div class="modal-body">
+                <fieldset>
+                    <legend>Choose new Status</legend>
+                    <div class="segmented-control">
+                        <input type="radio" name="radio2" value="1" id="tab1" :checked="selectedStatus == 0"
+                            v-on:change="onStatusChange('not started')" />
+                        <label for="tab1" class="segmented-control__1">
+                            <p>Not started</p>
+                        </label>
+                        <input type="radio" name="radio2" value="2" id="tab2" :checked="selectedStatus == 1"
+                            v-on:change="onStatusChange('todo')" />
+                        <label for="tab2" class="segmented-control__2">
+                            <p>To do</p>
+                        </label>
+                        <input type="radio" name="radio2" value="3" id="tab3" :checked="selectedStatus == 2"
+                            v-on:change="onStatusChange('in progress')" />
+                        <label for="tab3" class="segmented-control__3">
+                            <p>In progress</p>
+                        </label>
+                        <input type="radio" name="radio2" value="4" id="tab4" :checked="selectedStatus == 3"
+                            v-on:change="onStatusChange('done')" />
+                        <label for="tab4" class="segmented-control__4">
+                            <p>Done</p>
+                        </label>
+                        <div class="segmented-control__color"></div>
+                    </div>
+                </fieldset>
+            </div>
+        </modal>
+    </div>
+    <main id="todolist">
+        <h1>
+            Todo List
+            <span>Get things done, one item at a time.</span>
+        </h1>
+        <template v-if="todo.length">
+            <transition-group name="todolist" tag="ul">
+                <li v-for="item in todoByStatus" v-bind:class=" item.status === 'done' ? 'done' : ''"
+                    v-bind:key="item.id">
+                    <span class="label">{{item.label}}</span>
+                    <div class="actions">
+                        <button class="btn-picto" type="button" v-on:click="openModal(item)"
+                            v-bind:aria-label="item.status !== 'done' ? 'Undone' : 'Done'"
+                            v-bind:title="item.status !== 'done' ? 'Undone' : 'Done'">
+                            <i aria-hidden="true"
+                                class="material-icons">{{ item.status === 'done' ? 'check_box' : 'check_box_outline_blank' }}</i>
+                        </button>
+                        <button class="btn-picto" type="button" v-on:click="deleteItemFromList(item)"
+                            aria-label="Delete" title="Delete">
+                            <i aria-hidden="true" class="material-icons">delete</i>
+                        </button>
+                    </div>
+                </li>
+            </transition-group>
+            <togglebutton label="Move done items at the end?" name="todosort" v-on:clicked="clickontoogle" />
+        </template>
+        <p v-else class="emptylist">Your todo list is empty.</p>
+        <form name="newform" v-on:submit.prevent="addItem">
+            <label for="newitem">Add to the todo list</label>
+            <input type="text" name="newitem" id="newitem" v-model="newitem">
+            <button type="submit">Add item</button>
+        </form>
+    </main>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-js-modal@1.3.28/dist/index.min.js"></script>
+    <script src="assets/js/todo.js"></script>
+</body>
+
+</html>
