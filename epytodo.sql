@@ -16,8 +16,8 @@ CREATE TABLE `epytodo`.`todo` (
   `description` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT (now()),
   `due_time` datetime NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT "not started" COMMENT 'not started by default / todo / in progress / done',
+  `status` enum('not started','todo','in progress','done') NOT NULL DEFAULT "not started",
   `user_id` int unsigned NOT NULL
 );
 
-ALTER TABLE `todo` ADD FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
+ALTER TABLE `todo` ADD FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE;
